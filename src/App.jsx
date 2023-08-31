@@ -1,11 +1,10 @@
 // import { useState } from 'react'
+import DateCounter from './components/DateCounter';
 
-function App() {
+export default function App() {
   return (
-    <>
-      <h1>Hey</h1>
-    </>
+    <div className=''>
+      <DateCounter />
+    </div>
   );
 }
-
-export default App;
