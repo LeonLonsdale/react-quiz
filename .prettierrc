@@ -7,5 +7,15 @@
   "trailingComma": "all",
   "bracketSpacing": true,
   "bracketSameLine": false,
-  "arrowParens": "always"
+  "arrowParens": "always",
+  "overrides": [
+    {
+      "files": ["*.html"],
+      "options": {
+        "tabWidth": 4,
+        "semi": false,
+        "trailingComma": "none"
+      }
+    }
+  ]
 }
