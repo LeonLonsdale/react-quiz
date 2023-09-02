@@ -1,7 +1,5 @@
-// import { useState } from 'react'
 import { useEffect, useReducer } from 'react';
 
-import DateCounter from './components/DateCounter';
 import Header from './components/Header';
 import Main from './components/Main';
 
@@ -26,9 +24,8 @@ export default function App() {
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      // try {
       const response = await fetch('http://localhost:8000/questions');
-      if (response && !response.ok) throw new Error(response.status);
+      if (!response?.ok) throw new Error(response.status);
       const data = await response.json();
       dispatch({ type: 'dataReceived', payload: data });
     };
