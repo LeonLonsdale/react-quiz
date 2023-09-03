@@ -8,6 +8,7 @@ import StarScreen from './StarScreen';
 import Question from './Question';
 import NextButton from './NextButton';
 import Progress from './Progress';
+import FinishedScreen from './FinishedScreen';
 
 const initialState = {
   questions: [],
@@ -15,6 +16,7 @@ const initialState = {
   index: 0,
   answer: null,
   points: 0,
+  highscore: 0,
 };
 
 const reducer = (state, action) => {
@@ -27,6 +29,13 @@ const reducer = (state, action) => {
       return { ...state, status: 'active' };
     case 'nextQuestion':
       return { ...state, index: state.index + 1, answer: null };
+    case 'finish':
+      return {
+        ...state,
+        status: 'finished',
+        highscore:
+          state.points > state.highscore ? state.points : state.highscore,
+      };
     case 'newAnswer':
       // get correct option and points from current question
       // action.payload is the option the user has selected
@@ -46,10 +55,8 @@ const reducer = (state, action) => {
 };
 
 export default function App() {
-  const [{ questions, status, index, answer, points }, dispatch] = useReducer(
-    reducer,
-    initialState,
-  );
+  const [{ questions, status, index, answer, points, highscore }, dispatch] =
+    useReducer(reducer, initialState);
 
   const numQuestions = questions.length;
   const totalPoints = questions.reduce((acc, cur) => acc + cur.points, 0);
@@ -88,8 +95,20 @@ export default function App() {
               answer={answer}
               points={points}
             />
-            <NextButton dispatch={dispatch} answer={answer} />
+            <NextButton
+              dispatch={dispatch}
+              answer={answer}
+              index={index}
+              numQuestions={numQuestions}
+            />
           </>
+        )}
+        {status === 'finished' && (
+          <FinishedScreen
+            points={points}
+            totalPoints={totalPoints}
+            highscore={highscore}
+          />
         )}
       </Main>
     </div>
