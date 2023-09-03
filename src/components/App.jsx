@@ -7,6 +7,7 @@ import Error from './Error';
 import StarScreen from './StarScreen';
 import Question from './Question';
 import NextButton from './NextButton';
+import Progress from './Progress';
 
 const initialState = {
   questions: [],
@@ -51,6 +52,7 @@ export default function App() {
   );
 
   const numQuestions = questions.length;
+  const totalPoints = questions.reduce((acc, cur) => acc + cur.points, 0);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -73,6 +75,13 @@ export default function App() {
         )}
         {status === 'active' && (
           <>
+            <Progress
+              index={index}
+              numQuestions={numQuestions}
+              points={points}
+              totalPoints={totalPoints}
+              answer={answer}
+            />
             <Question
               question={questions[index]}
               dispatch={dispatch}
