@@ -6,6 +6,7 @@ import Loader from './Loader';
 import Error from './Error';
 import StarScreen from './StarScreen';
 import Question from './Question';
+import NextButton from './NextButton';
 
 const initialState = {
   questions: [],
@@ -23,8 +24,11 @@ const reducer = (state, action) => {
       return { ...state, status: 'error' };
     case 'start':
       return { ...state, status: 'active' };
+    case 'nextQuestion':
+      return { ...state, index: state.index + 1, answer: null };
     case 'newAnswer':
       // get correct option and points from current question
+      // action.payload is the option the user has selected
       const { correctOption, points } = state.questions.at(state.index);
 
       return {
@@ -68,12 +72,15 @@ export default function App() {
           <StarScreen numQuestions={numQuestions} dispatch={dispatch} />
         )}
         {status === 'active' && (
-          <Question
-            question={questions[index]}
-            dispatch={dispatch}
-            answer={answer}
-            points={points}
-          />
+          <>
+            <Question
+              question={questions[index]}
+              dispatch={dispatch}
+              answer={answer}
+              points={points}
+            />
+            <NextButton dispatch={dispatch} answer={answer} />
+          </>
         )}
       </Main>
     </div>
