@@ -11,6 +11,8 @@ const initialState = {
   questions: [],
   status: '', // loading / error / ready / active / finished
   index: 0,
+  answer: null,
+  points: 0,
 };
 
 const reducer = (state, action) => {
@@ -21,13 +23,25 @@ const reducer = (state, action) => {
       return { ...state, status: 'error' };
     case 'start':
       return { ...state, status: 'active' };
+    case 'newAnswer':
+      // get correct option and points from current question
+      const { correctOption, points } = state.questions.at(state.index);
+
+      return {
+        ...state,
+        answer: action.payload,
+        points:
+          action.payload === correctOption
+            ? state.points + points
+            : state.points,
+      };
     default:
       throw new Error('Unknown action');
   }
 };
 
 export default function App() {
-  const [{ questions, status, index }, dispatch] = useReducer(
+  const [{ questions, status, index, answer, points }, dispatch] = useReducer(
     reducer,
     initialState,
   );
@@ -53,7 +67,14 @@ export default function App() {
         {status === 'ready' && (
           <StarScreen numQuestions={numQuestions} dispatch={dispatch} />
         )}
-        {status === 'active' && <Question question={questions[index]} />}
+        {status === 'active' && (
+          <Question
+            question={questions[index]}
+            dispatch={dispatch}
+            answer={answer}
+            points={points}
+          />
+        )}
       </Main>
     </div>
   );
