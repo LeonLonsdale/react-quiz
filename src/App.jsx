@@ -5,6 +5,7 @@ import Main from './components/Main';
 import Loader from './components/Loader';
 import Error from './components/Error';
 import StarScreen from './components/StarScreen';
+import Question from './components/Question';
 
 const initialState = {
   questions: [],
@@ -17,6 +18,8 @@ const reducer = (state, action) => {
       return { ...state, questions: action.payload, status: 'ready' };
     case 'dataFailed':
       return { ...state, status: 'error' };
+    case 'start':
+      return { ...state, status: 'active' };
     default:
       throw new Error('Unknown action');
   }
@@ -43,7 +46,10 @@ export default function App() {
       <Main>
         {status === 'loading' && <Loader />}
         {status === 'error' && <Error />}
-        {status === 'ready' && <StarScreen numQuestions={numQuestions} />}
+        {status === 'ready' && (
+          <StarScreen numQuestions={numQuestions} dispatch={dispatch} />
+        )}
+        {status === 'active' && <Question />}
       </Main>
     </div>
   );
