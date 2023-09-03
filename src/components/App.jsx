@@ -12,7 +12,7 @@ import FinishedScreen from './FinishedScreen';
 
 const initialState = {
   questions: [],
-  status: '', // loading / error / ready / active / finished
+  status: 'loading', // loading / error / ready / active / finished
   index: 0,
   answer: null,
   points: 0,
@@ -48,6 +48,13 @@ const reducer = (state, action) => {
           action.payload === correctOption
             ? state.points + points
             : state.points,
+      };
+    case 'restart':
+      return {
+        ...initialState,
+        status: 'ready',
+        highscore: state.highscore,
+        questions: state.questions,
       };
     default:
       throw new Error('Unknown action');
@@ -108,6 +115,7 @@ export default function App() {
             points={points}
             totalPoints={totalPoints}
             highscore={highscore}
+            dispatch={dispatch}
           />
         )}
       </Main>
