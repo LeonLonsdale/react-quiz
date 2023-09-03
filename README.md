@@ -1,8 +1,5 @@
-# React + Vite
+# React Quiz
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a project for section 16 of [Jonas Schmedtmann's](https://www.x.com/jonasschmedtman)'s React course on Udemy ([The Ultimate React Course 2023](https://www.udemy.com/course/the-ultimate-react-course/)).
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The core focus onf this project is learning to use the `useReducer()` hook.
